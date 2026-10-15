@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>麦麦派对官 · 端到端演示</title>
+<style>
+  :root{--red:#e60012;--gold:#ffc72c;--ink:#3a2a12;--bg:#fff7e6;--sub:#9a7b4f}
+  *{box-sizing:border-box}
+  body{margin:0;padding:24px;background:var(--bg);color:var(--ink);
+       font-family:-apple-system,"Microsoft YaHei",sans-serif}
+  .wrap{max-width:760px;margin:0 auto}
+  h1{color:var(--red);font-size:24px;margin:0 0 4px}
+  .sub{color:var(--sub);font-size:13px;margin-bottom:18px}
+  .bubble{background:#fff;border-radius:14px;padding:12px 16px;
+          box-shadow:0 4px 18px rgba(230,0,18,.12);margin-bottom:18px;font-size:15px}
+  .bubble b{color:var(--red)}
+  .step{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:12px;
+         padding:12px 14px;margin-bottom:10px;opacity:.32;transform:translateY(6px);
+         transition:opacity .45s,transform .45s,box-shadow .45s}
+  .step.on{opacity:1;transform:none;box-shadow:0 6px 22px rgba(230,0,18,.18);
+         border:1px solid var(--gold)}
+  .idx{flex:0 0 26px;height:26px;border-radius:50%;background:var(--gold);color:#fff;
+       font-weight:700;display:flex;align-items:center;justify-content:center;font-size:13px}
+  .step.on .idx{background:var(--red)}
+  .body{flex:1}
+  .t{font-size:12px;color:var(--sub);letter-spacing:.02em}
+  .n{font-family:Consolas,monospace;font-size:13px;color:var(--red);font-weight:700;margin-top:2px}
+  .r{font-size:14px;margin-top:4px;line-height:1.5}
+  .done{text-align:center;margin-top:16px;font-size:16px;font-weight:700;color:var(--red);
+        opacity:0;transition:opacity .5s}
+  .done.on{opacity:1}
+  .foot{margin-top:18px;font-size:12px;color:var(--sub);line-height:1.7;
+        background:#fff;border-radius:12px;padding:12px 14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>麦麦派对官 · 端到端演示</h1>
+  <div class="sub">基于麦当劳官方 MCP（mcp.mcd.cn）真实链路 · 数据为实时抓取</div>
+
+  <div class="bubble"><b>用户：</b>帮我看看上海哪个麦当劳能办生日派对，10 月底的。</div>
+
+  <div id="steps"></div>
+
+  <div class="done" id="done">🎉 策划单已生成：assets/real_party_plan.html</div>
+
+  <div class="foot">
+    流程：mall-points-products 取派对 spuId → query-party-city → query-party-store
+    → query-party-store-date → query-party-store-session → 生成策划单 → 用户确认后 party-order-create 下单。<br>
+    说明：价格、库存与可约场次以麦当劳官方 MCP 实时返回为准；演示全程只读，未执行任何下单动作。
+  </div>
+</div>
+
+<script>
+const steps = [
+  {t:"STEP 0 · 取派对商品", n:"mall-points-products",
+   r:"返回 18 个派对类商品 → 选用 spuId=1779「麦当劳奇妙生日派对」"},
+  {t:"STEP 1 · 可办城市", n:"query-party-city(1779)",
+   r:"281 个城市 → 命中「上海市」(code=310100)"},
+  {t:"STEP 2 · 可办门店", n:"query-party-store(310100, lat, lon, 1779)",
+   r:"麦当劳上海黄浦华旭国际大厦餐厅 · storeCode=1450713"},
+  {t:"STEP 3 · 可约日期", n:"query-party-store-date(1779, 1450713)",
+   r:"9 个可约日期 → 选定 2026-10-18"},
+  {t:"STEP 4 · 可约场次", n:"query-party-store-session(1779, 1450713, 2026-10-18)",
+   r:"场次 id=36946598 · 12:00-13:30 · 5-12 人成团 · ¥50 · 余位 12"},
+  {t:"STEP 5 · 输出", n:"scripts/party_planner.py",
+   r:"渲染可视化策划单 HTML，供用户确认后再下单"}
+];
+
+const box = document.getElementById('steps');
+steps.forEach((s, i) => {
+  const d = document.createElement('div');
+  d.className = 'step';
+  d.id = 's' + i;
+  d.innerHTML = '<div class="idx">' + i + '</div><div class="body">'
+    + '<div class="t">' + s.t + '</div>'
+    + '<div class="n">' + s.n + '</div>'
+    + '<div class="r">' + s.r + '</div></div>';
+  box.appendChild(d);
+});
+
+const done = document.getElementById('done');
+let cur = 0;
+document.getElementById('s0').classList.add('on');
+
+setInterval(() => {
+  document.querySelectorAll('.step').forEach(e => e.classList.remove('on'));
+  document.getElementById('s' + cur).classList.add('on');
+  done.classList.toggle('on', cur === steps.length - 1);
+  cur = (cur + 1) % steps.length;
+}, 1500);
+</script>
+</body>
+</html>
