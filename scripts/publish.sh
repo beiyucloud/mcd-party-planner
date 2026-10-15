@@ -45,6 +45,11 @@ echo "==> 3/4 提交并推送全部文件"
 if [ ! -d .git ]; then
   git init -b main
 fi
+# ⚠️ 本机代理会对 HTTPS 做 TLS 中间人：git 默认的 schannel 后端会因
+#    吊销检查失败而报 CRYPT_E_NO_REVOCATION_CHECK，且关闭吊销检查也无效。
+#    解决办法：改用 openssl 后端，并指向系统 CA 根证书包。
+git config http.sslBackend openssl
+git config http.sslCAInfo "C:/Users/Administrator/.workbuddy/system-ca-bundle.pem"
 # 若本机未配置 git 身份，临时写入仓库级配置（不污染全局）
 if [ -z "$(git config user.name 2>/dev/null || true)" ]; then
   git config user.name "$OWNER"
