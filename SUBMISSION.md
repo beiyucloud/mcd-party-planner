@@ -62,7 +62,7 @@ bash scripts/publish.sh
 > 官方校验要点：
 > - 项目地址**不要用 Markdown 链接**，直接贴裸 URL。
 > - 字段之间**不要插入多余空行**；`项目简介：` 与简介内容同行。
-> - 报名 Issue 需发布在官方活动仓库 `M-China-Official/mcd-developer-innovation-challenge`。
+> - 报名 Issue 需发布在官方活动仓库 `M-China/mcd-developer-innovation-challenge`。
 
 ## 五、演示素材
 

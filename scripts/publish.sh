@@ -16,7 +16,7 @@ OWNER="beiyucloud"
 REPO="mcd-party-planner"
 DESC="麦麦派对官 | 麦当劳 x WorkBuddy 1024 程序员节创意开发大赛参赛作品：基于麦当劳官方 MCP 的派对主题活动策划 Skill，端到端串起城市→门店→日期→场次→策划单→下单。"
 
-OFFICIAL_OWNER="M-China-Official"
+OFFICIAL_OWNER="M-China"
 OFFICIAL_REPO="mcd-developer-innovation-challenge"
 
 # 切到项目根目录（scripts/ 的上一级）
