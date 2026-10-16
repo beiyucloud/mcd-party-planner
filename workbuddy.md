@@ -76,5 +76,18 @@ python scripts/party_planner.py demo_data.json -o assets/party_plan.html
 - 源 MP4 已加入 `.gitignore`（不入仓）；`demo.gif` 与转换脚本提交入库。
 - 结论：demo.gif **非参赛必需**，且官方要求报名 Issue 正文不得含图片，故仅作仓库 README 可选素材。
 
+## 双模块升级：派对策划 + 积分精算（2026-10-16 09:xx）
+- **竞争情报**：检索发现已报名成功的 `#581 hulinkang9527/mcctl` 是**全量集成 35 工具的综合 CLI**（人格测试/省钱/下单/派对/积分/网页 Playground/70 测试/CI），其「麦麦派对策划师」为主打子功能之一。本作品原「派对策划师」定位是其子集，纯 Star 赛劣势明显。
+- **决策（用户选 A+B）**：不与 mcctl 比广度，改为双深耕：
+  - A. 派对模块重定位为「**策划单/邀请函生成器**」（mcctl 做约束求解，本作品做可分享的精美策划单+真实数据），保留现有代码。
+  - B. 新增蓝海模块「**积分精算师**」，与 mcctl 几乎零重叠，且契合用户看板能力。
+- **新增 `scripts/points_advisor.py`**：实时+离线双模式；只读 `query-my-account` / `query-lottery-info` / `mall-points-products`，本地算过期预警+可抽次数+兑换性价比排行+智能建议，渲染 `assets/points_dashboard.html`。**红线：绝不调用 `draw-lottery`/`mall-create-order` 写操作**。
+- 实连验证：三个只读工具 schema 与返回字段已核对（`availablePoint`、`currentMouthExpirePoint`/`nextMouthExpirePoint`/`lastMouthExpirePoint`、`drawPoint=24`、`drawDecision.resourceEligible`、商品 `point`/`price`）；离线+实时两模式均实跑通过（实时为测试空号，availablePoint=0，证明链路不崩）。
+- 文档同步：README/SKILL(含 4 个积分 Prompt 模板+检查清单)/MCP_INTEGRATION 均升级为双模块；仓库 slug 保持 `mcd-party-planner`（避免破坏已提交的报名 Issue 链接）。
+- `assets/*_live.html` 已加入 `.gitignore`（仅离线版入库）。
+
+## 报名 Issue #781 状态
+- 创建于 2026-10-16T01:28:46Z（`beiyucloud`），截至 09:5x 仍 0 评论，系统批量回复约在创建后 16 分钟，处于临界窗口；仓库元数据核验通过（Public / 创建 2026-10-16 / 默认分支 main / 必需文件齐备 / 声明逐字节一致 / Star=1）。
+
 ## 安全提示
 - 用户曾在对话中明文提供 MCP Token，已建议到 open.mcd.cn/mcp 控制台重新生成 / 吊销。所有脚本仅从环境变量 `MCD_MCP_TOKEN` 读取，不写入任何项目文件。

@@ -26,6 +26,15 @@
 | `query-meals` | 查询门店可售餐品，用于派对餐品搭配 |
 | `query-meal-detail` | 查询套餐组成 / 可替换项 |
 
+### 积分精算模块工具链（只读）
+| 工具 | 必填参数 | 用途 | 调用顺序 |
+|---|---|---|---|
+| `query-my-account` | 无 | 查积分账户：可用/累计/已用/冻结 + 本月(`currentMouthExpirePoint`)/下月(`nextMouthExpirePoint`)/上月(`lastMouthExpirePoint`)过期积分 | 1 |
+| `query-lottery-info` | 无 | 查抽奖：每次耗分 `drawPoint`、可抽判定 `drawDecision`、奖池 `prizes` | 2 |
+| `mall-points-products` | `catRuleIds`(可选) | 查可兑换商品：取 `point`(积分价) 与 `price`(面值) 算性价比 | 3 |
+
+> ⚠️ **安全红线**：积分模块**仅使用上述只读工具**。**绝不调用 `draw-lottery`（消耗积分抽奖）或 `mall-create-order`（下单）等写操作**；任何消耗积分的动作必须等用户明确确认。真实账号数据仅在内存渲染，不写入仓库。
+
 ## 调用流程（业务价值，已实连验证）
 ```
 用户意图（办派对）
@@ -52,3 +61,10 @@
 - `query-party-city` 返回空 → 如实告知用户当前无开放活动，**不编造**。
 - 429 限流（>600 次/分钟）→ 脚本对 MCP 调用加节流。
 - Token 失效（401）→ 提示用户重新在 open.mcd.cn/mcp 激活。
+
+## 积分模块验证（2026-10-16 实连只读测试）
+- `query-my-account` 返回字段已核对：`availablePoint` / `accumulativePoint` / `usedPoint` / `frozenPoint` / `currentMouthExpirePoint` / `nextMouthExpirePoint` / `lastMouthExpirePoint`（注意官方字段拼写是 `Mouth` 非 `Month`）。
+- `query-lottery-info` 实测：`drawPoint=24`，`drawDecision.resourceEligible` 字段可直接判断是否可抽；奖池为若干优惠券。
+- `mall-points-products` 实测：返回商品含 `spuName` / `point`(积分价) / `price`(面值) / `catName`，可据此做性价比排行。
+- 积分模块脚本 `points_advisor.py` 实时 + 离线双模式均实跑通过；**未调用任何写操作**。
+- 业务价值：把"积分会不会过期、抽还是换、换哪个最值"这类需要跨多个页面、手动比对的决策，压缩成一次查询 + 一张看板，且零风险（只读）。

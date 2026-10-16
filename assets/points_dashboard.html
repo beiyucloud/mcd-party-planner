@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>麦麦积分精算师 · 看板</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+ background:linear-gradient(135deg,#fff7e6,#ffe9c7);color:#2b2b2b;padding:20px}
+.wrap{max-width:760px;margin:0 auto}
+.tag{display:inline-block;font-size:12px;padding:3px 10px;border-radius:12px;
+ background:#ffc72c;color:#27251f;font-weight:700;margin-bottom:8px}
+h1{font-size:24px;color:#da291c}
+.sub{color:#7a7a7a;font-size:13px;margin-bottom:16px}
+.card{background:#fff;border-radius:16px;padding:18px;margin:14px 0;
+ box-shadow:0 6px 18px rgba(218,41,28,.08)}
+.big{font-size:40px;font-weight:800;color:#da291c}
+.kpis{display:flex;gap:12px;flex-wrap:wrap}
+.kpi{flex:1;min-width:120px;background:#fffaf0;border-radius:12px;padding:12px;text-align:center}
+.kpi .n{font-size:22px;font-weight:700;color:#27251f}
+.kpi .l{font-size:12px;color:#9a9a9a}
+.alert{background:#fff3f0;border-left:5px solid #da291c;padding:12px 14px;border-radius:8px}
+.ok{background:#eafaf0;border-left:5px solid #2e9e5b;padding:12px 14px;border-radius:8px}
+.alert ul{margin:8px 0 0 18px}
+.badge{background:#da291c;color:#fff;padding:1px 8px;border-radius:10px;font-size:12px}
+table{width:100%;border-collapse:collapse;margin-top:6px;font-size:14px}
+th,td{padding:8px 6px;border-bottom:1px solid #f0e6d2;text-align:left}
+th{color:#9a9a9a;font-weight:600;font-size:12px}
+.rank{font-size:16px}
+.chip{display:inline-block;background:#fff3d6;color:#8a6410;border-radius:10px;
+ padding:3px 9px;margin:3px;font-size:12px}
+.advice{background:#fff;border-radius:12px;padding:12px 16px}
+.advice li{margin:6px 0 6px 18px}
+.muted{color:#9a9a9a}
+.foot{text-align:center;color:#9a9a9a;font-size:12px;margin-top:18px}
+</style></head><body><div class="wrap">
+<div class="tag">离线演示数据（非实时 · 仅供展示）</div>
+<h1>🪙 麦麦积分精算师</h1>
+<div class="sub">基于麦当劳官方 MCP 只读数据 · 积分体检 / 过期预警 / 抽奖评估 / 兑换性价比</div>
+
+<div class="card">
+  <div class="kpis">
+    <div class="kpi"><div class="n">1,280</div><div class="l">可用积分</div></div>
+    <div class="kpi"><div class="n">5,640</div><div class="l">累计积分</div></div>
+    <div class="kpi"><div class="n">3,860</div><div class="l">已用积分</div></div>
+    <div class="kpi"><div class="n">0</div><div class="l">冻结积分</div></div>
+  </div>
+</div>
+
+<div class="alert">🔥 过期预警<ul><li><span class="badge">⚠ 下月将过期</span> <b>300</b> 积分</li><li><span class="badge">⚠ 上月已过期(未用)</span> <b>420</b> 积分</li></ul></div>
+
+<div class="card">
+  <h3>🎰 抽奖评估</h3>
+  <p>每次消耗 <b>24</b> 积分，当前可抽 <b style="color:#da291c">53</b> 次。</p>
+  <p class="muted" style="margin-top:6px">奖池：</p>
+  <div><span class="chip">下单立减3元券</span><span class="chip">下单立减2元券</span><span class="chip">麦辣三件套5折券</span><span class="chip">板烧三件套5折券</span><span class="chip">甜辣小食组合5折券</span><span class="chip">免费吉士堡券</span></div>
+</div>
+
+<div class="card">
+  <h3>🏆 兑换性价比排行（每 100 积分≈？元）</h3>
+  <table><thead><tr><th>排名</th><th>商品</th><th>积分价</th><th>面值</th><th>密度</th><th>类目</th></tr></thead>
+  <tbody><tr>
+              <td class="rank">🥇</td>
+              <td>中杯可乐免费券</td>
+              <td>300</td>
+              <td>¥9.0</td>
+              <td><b>3.0</b></td>
+              <td>商品券</td></tr><tr>
+              <td class="rank">🥈</td>
+              <td>麦旋风买一送一券</td>
+              <td>500</td>
+              <td>¥14.0</td>
+              <td><b>2.8</b></td>
+              <td>商品券</td></tr><tr>
+              <td class="rank">🥉</td>
+              <td>免费吉士堡券</td>
+              <td>600</td>
+              <td>¥13.0</td>
+              <td><b>2.17</b></td>
+              <td>商品券</td></tr><tr>
+              <td class="rank">4.</td>
+              <td>薯条买一送一券</td>
+              <td>800</td>
+              <td>¥12.0</td>
+              <td><b>1.5</b></td>
+              <td>商品券</td></tr><tr>
+              <td class="rank">5.</td>
+              <td>麦辣鸡腿堡免费券</td>
+              <td>1,500</td>
+              <td>¥21.0</td>
+              <td><b>1.4</b></td>
+              <td>商品券</td></tr><tr>
+              <td class="rank">6.</td>
+              <td>10元现金抵用券</td>
+              <td>1,000</td>
+              <td>¥10.0</td>
+              <td><b>1.0</b></td>
+              <td>商品券</td></tr></tbody></table>
+</div>
+
+<div class="card advice">
+  <h3>💡 智能建议</h3>
+  <ul><li>你有 300 积分将于下月过期，建议优先兑换高价值密度的券，避免作废。</li><li>当前可抽 53 次（每次耗 24 积分），奖池含「下单立减3元券」等，可小试。</li><li>性价比最高：「中杯可乐免费券」每 100 积分≈3.0 元，建议优先兑换。</li></ul>
+</div>
+
+<div class="foot">麦麦派对官 · 积分精算模块 | 数据来源：麦当劳官方 MCP（只读）| 不存储账号凭证</div>
+</div></body></html>
