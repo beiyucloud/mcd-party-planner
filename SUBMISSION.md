@@ -67,7 +67,8 @@ bash scripts/publish.sh
 ## 五、演示素材
 
 - `assets/real_party_plan.html` —— **实时真实数据**渲染的策划单（上海市 / 麦当劳上海黄浦华旭国际大厦餐厅 / 2026-10-18 / 场次 36946598）。
-- `assets/demo.html` —— **自包含动画演示**，自动播放整条链路（spu→城市→门店→日期→场次→策划单）。浏览器打开即可播放；如需 `demo.gif`，用 **Win+G（Xbox Game Bar）** 录屏后覆盖同名文件。
+- `assets/demo.gif` —— **演示动图**（360×800，约 13 秒循环，130 帧），由录屏 MP4 经 `scripts/mp4_to_gif.py`（ffmpeg 调色板方案）转换生成，展示完整链路。注意：**demo.gif 非参赛必需**，且官方要求报名 Issue 正文不得携带图片，请勿将 GIF 放入 Issue。
+- `assets/demo.html` —— **可交互自包含动画演示**，浏览器直接打开即自动播放整条链路（spu→城市→门店→日期→场次→策划单），作为 GIF 的等价替代。
 - `assets/party_plan.html` —— 模拟数据版策划单（离线兜底）。
 
 ## 六、提交前最终检查
@@ -79,7 +80,7 @@ bash scripts/publish.sh
 - [ ] **GitHub 仓库已创建（Public）且创建时间在要求区间内** —— 待你执行
 - [ ] **全部文件已推送** —— 跑 `bash scripts/publish.sh` 即可
 - [ ] **参赛 Issue 已提交** —— 脚本自动完成
-- [ ] （可选）`assets/demo.gif` 已录制并覆盖
+- [x] （可选）`assets/demo.gif` 已生成（非参赛必需；Issue 正文不得含图片）
 
 ## 七、安全提醒
 

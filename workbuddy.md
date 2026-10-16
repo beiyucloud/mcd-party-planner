@@ -68,5 +68,13 @@ python scripts/party_planner.py demo_data.json -o assets/party_plan.html
 - 用 MCP 检索确认 `beiyucloud/mcd-party-planner` 当前不存在（`total_count:0`），故仍需用户本人建仓后推送。
 - 本地仓库已就绪：2 个提交（`666fabf` 主体 + `3c66ec5` 文档修复），工作区干净。
 
+## 演示动图生成（2026-10-16）
+- 用户放弃 Win+G（Xbox Game Bar 在本环境无效：疑似远程/虚拟化或设置关闭），改用录屏工具产出 `demo_source.mp4`（3.26MB，竖屏 640×1422，13.04s，30fps），并经 WorkBuddy 分享。
+- 下载后，用 venv（PyPI 官方源 + 环境代理 `127.0.0.1:14627`）安装 `pillow / imageio / imageio-ffmpeg / numpy`；`imageio-ffmpeg` 的 wheel 自带 ffmpeg 二进制，无需联网再取。
+- 新增 `scripts/mp4_to_gif.py`：ffmpeg 调色板方案（`palettegen`+`paletteuse`）转 GIF，支持 `--width/--fps`。
+- 输出 `assets/demo.gif`：360×800、130 帧、约 13s 循环、5.38MB（首版 480 宽 9.93MB 偏大，降到 360/10fps 后达标）。PIL 核验为有效动画 GIF。
+- 源 MP4 已加入 `.gitignore`（不入仓）；`demo.gif` 与转换脚本提交入库。
+- 结论：demo.gif **非参赛必需**，且官方要求报名 Issue 正文不得含图片，故仅作仓库 README 可选素材。
+
 ## 安全提示
 - 用户曾在对话中明文提供 MCP Token，已建议到 open.mcd.cn/mcp 控制台重新生成 / 吊销。所有脚本仅从环境变量 `MCD_MCP_TOKEN` 读取，不写入任何项目文件。

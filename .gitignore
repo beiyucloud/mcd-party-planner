@@ -11,3 +11,6 @@ env/
 
 .DS_Store
 Thumbs.db
+
+# 录屏源文件（已转成 assets/demo.gif，源 MP4 不入仓）
+assets/demo_source.mp4
