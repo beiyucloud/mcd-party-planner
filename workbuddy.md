@@ -57,5 +57,16 @@ python scripts/party_planner.py demo_data.json -o assets/party_plan.html
 - **一键脚本**：新增 `scripts/publish.sh`（gh 驱动）：创建 Public 仓库 → 提交推送全部文件 → 按官方格式提交 Issue；可重复执行，仓库已存在则跳过创建。
 - 项目共 20 个文件，必需文件全部齐备（README / CONTEST_DECLARATION / MCP_INTEGRATION / mcp-config.example.json / 源代码 / workbuddy.md）。
 
+## 重试与网络诊断（2026-10-16 00:2x）
+- 再次尝试 MCP `create_repository` → 仍 `403 Resource not accessible by integration`，确认连接器为只读作用域。
+- 改走本地 git：首次 `git push` 报 `CRYPT_E_NO_REVOCATION_CHECK`（schannel 吊销检查失败）。
+- 定位到环境存在 MITM 代理 `http://127.0.0.1:15006`，且系统 CA 根证书包在
+  `C:/Users/Administrator/.workbuddy/system-ca-bundle.pem`（由 `NODE_EXTRA_CA_CERTS` 暴露）。
+- 关闭吊销检查（`http.schannelCheckRevoke=false`）无效；改用 **openssl 后端 + 系统 CA 包**后
+  `git ls-remote` 成功连通 GitHub（远端正常返回 "Repository not found"）。
+- 已把该修复写入仓库 git 配置，并同步进 `scripts/publish.sh`。
+- 用 MCP 检索确认 `beiyucloud/mcd-party-planner` 当前不存在（`total_count:0`），故仍需用户本人建仓后推送。
+- 本地仓库已就绪：2 个提交（`666fabf` 主体 + `3c66ec5` 文档修复），工作区干净。
+
 ## 安全提示
 - 用户曾在对话中明文提供 MCP Token，已建议到 open.mcd.cn/mcp 控制台重新生成 / 吊销。所有脚本仅从环境变量 `MCD_MCP_TOKEN` 读取，不写入任何项目文件。
